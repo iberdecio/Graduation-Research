@@ -17,7 +17,7 @@ def load_negatively_selected_positions(csv_file):
 def get_matches(start_position, end_position, target_positions):
     matches = []
     # Update to handle a 12-mer window
-    for amino_acid_position in range(start_position, end_position - 11):  # Adjusted for a 12-mer window
+    for amino_acid_position in range(start_position, end_position - 11):  #12mer
         # Ensure the range is for 12 amino acids
         matching_positions = [pos for pos in range(amino_acid_position, amino_acid_position + 12) if pos in target_positions]
         # Check for at least 3 matches
@@ -34,8 +34,8 @@ def main():
         writer = csv.writer(outfile)
         writer.writerow(["Epitope", "Matches"])  # Column headers
         # Adjust for a 12-mer window in the main loop
-        for start_position in range(len(protein_sequence) - 11):  # Adjusted for a 12-mer window
-            end_position = start_position + 12  # Adjusted for a 12-mer window
+        for start_position in range(len(protein_sequence) - 11):  #12mer
+            end_position = start_position + 12  #12mer
             matches = get_matches(start_position, end_position, negatively_selected_positions)
             if matches:
                 epitope_sequence = protein_sequence[start_position:end_position]
@@ -43,10 +43,10 @@ def main():
                 for _, matching_positions in matches:
                     for pos in matching_positions:
                         # Ensure the position is within the current window
-                        if pos - start_position < len(marked_sequence):  # Boundary check
+                        if pos - start_position < len(marked_sequence):
                             marked_sequence[pos - start_position] = protein_sequence[pos].upper()  
                 marked_epitope_sequence = "".join(marked_sequence)
-                writer.writerow([marked_epitope_sequence, matches])  # Write to CSV
+                writer.writerow([marked_epitope_sequence, matches])
                 print(f"Writing: Epitope: {marked_epitope_sequence}, Matches: {matches}")
 
 if __name__ == "__main__":
