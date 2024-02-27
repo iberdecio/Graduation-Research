@@ -17,8 +17,8 @@ def load_negatively_selected_positions(csv_file):
 def get_matches(start_position, end_position, target_positions):
     matches = []
     # Adjust for 11-mer by checking the range appropriately
-    for amino_acid_position in range(start_position, end_position - 10):  # Adjusted for an 11-mer window
-        matching_positions = [pos for pos in range(amino_acid_position, amino_acid_position + 11) if pos in target_positions]  # Adjusted to 11
+    for amino_acid_position in range(start_position, end_position - 10):  #11mer
+        matching_positions = [pos for pos in range(amino_acid_position, amino_acid_position + 11) if pos in target_positions]  #11mer
         if len(matching_positions) >= 3:
             matches.append((amino_acid_position, matching_positions))
     return matches
@@ -30,8 +30,8 @@ def main():
     output_file_path = "11mersOutfile.csv"  
     with open(output_file_path, 'w', newline='') as outfile:
         writer = csv.writer(outfile)
-        writer.writerow(["Epitope", "Matches"])  # Column headers
-        for start_position in range(len(protein_sequence) - 10):  # Use an 11-mer window
+        writer.writerow(["Epitope", "Matches"])
+        for start_position in range(len(protein_sequence) - 10):  #11mer
             end_position = start_position + 11
             matches = get_matches(start_position, end_position, negatively_selected_positions)
             if matches:
@@ -39,10 +39,10 @@ def main():
                 marked_sequence = list(epitope_sequence)
                 for _, matching_positions in matches:
                     for pos in matching_positions:
-                        if pos - start_position < len(marked_sequence):  # Boundary check
+                        if pos - start_position < len(marked_sequence):
                             marked_sequence[pos - start_position] = protein_sequence[pos].upper()
                 marked_epitope_sequence = "".join(marked_sequence)
-                writer.writerow([marked_epitope_sequence, matches])  # Write to CSV
+                writer.writerow([marked_epitope_sequence, matches])
                 print(f"Writing: Epitope: {marked_epitope_sequence}, Matches: {matches}")
 
 if __name__ == "__main__":
