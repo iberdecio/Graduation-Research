@@ -30,7 +30,7 @@ def main():
     output_file_path = "8mersOutfile.csv"  
     with open(output_file_path, 'w', newline='') as outfile:
         writer = csv.writer(outfile)
-        writer.writerow(["Epitope", "Matches"])  # Column headers
+        writer.writerow(["Epitope", "Matches"])
         for start_position in range(len(protein_sequence) - 7):  #8mer
             end_position = start_position + 8
             matches = get_matches(start_position, end_position, negatively_selected_positions)
