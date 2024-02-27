@@ -32,7 +32,7 @@ def main():
     output_file_path = "12mersOutfile.csv"  
     with open(output_file_path, 'w', newline='') as outfile:
         writer = csv.writer(outfile)
-        writer.writerow(["Epitope", "Matches"])  # Column headers
+        writer.writerow(["Epitope", "Matches"]) 
         # Adjust for a 12-mer window in the main loop
         for start_position in range(len(protein_sequence) - 11):  #12mer
             end_position = start_position + 12  #12mer
